@@ -1,0 +1,73 @@
+
+Page not found (404)
+Request Method: 	GET
+Request URL: 	http://127.0.0.1:8000/mimeapp/mimeapp/
+
+Using the URLconf defined in django10amproj4.urls, Django tried these URL patterns, in this order:
+
+    ^mimeapp/ ^html$ [name='htmlview']
+    ^mimeapp/ ^excel$ [name='excelview']
+    ^mimeapp/ ^pdf$ [name='pdfview']
+
+The current path, mimeapp/mimeapp/, didn't match any of these.
+
+You're seeing this error because you have DEBUG = True in your Django settings file. Change that to False, and Django will display a standard 404 page.
+===========================================================
+Not Found: /
+[09/Sep/2017 09:33:00] "GET / HTTP/1.1" 404 1922
+Not Found: /mimeapp/
+[09/Sep/2017 09:33:14] "GET /mimeapp/ HTTP/1.1" 404 2392
+
+
+project
+=======
+Settings.py
+-----------
+STATIC_DIR = os.path.join(BASE_DIR,'static')
+ 
+urls.py
+-------
+from django.conf.urls import url
+from django.conf.urls import include
+
+urlpatterns = [
+url(r'^mimeapp/',include('mimeapp.urls')),
+]
+
+mimeapp
+-------
+urls.py
+-------
+from django.conf.urls import url
+from . import views
+
+app_name='mimeapp'
+urlpatterns =[
+    url(r'^html$',views.htmlview,name='htmlview'),
+    url(r'^excel$',views.excelview,name='excelview'),
+    url(r'^pdf$',views.excelview,name='pdfview'),
+]
+
+urls.py
+-------
+# -*- coding: utf-8 -*-
+from __future__ import unicode_literals
+
+from django.shortcuts import render
+
+# Create your views here.
+
+from django.http import HttpResponse
+
+data="<table><tr><th>eid></th><th>ename</th><th>esal</th></tr><tr><td>1001</td><td>scott</td>2000</td><td>1002</td><td>blake</td>3000</td><td>1001</td><td>miller</td>4000</td></tr></table>"
+
+def htmlview(request):
+     return
+     HttpResponse(data,content_type='text/html')
+
+def excelview(request):
+     return
+     HttpResponse(data,content_type='application/vnd.ms-excel')
+def pdfview(request):
+     return
+     HttpResponse(data,content_type='application/pdf')
